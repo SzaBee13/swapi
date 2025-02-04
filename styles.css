@@ -18,6 +18,10 @@ h1 {
     font-size: 2.5rem;
 }
 
+a {
+    color: #fff;
+}
+
 main {
     padding: 20px;
     padding-bottom: 100px;
@@ -64,6 +68,10 @@ footer {
 .character-card p {
     margin: 5px 0;
     font-size: 1rem;
+}
+
+.character-card li {
+    text-align: left;
 }
 
 .page-buttons-parent {

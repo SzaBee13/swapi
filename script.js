@@ -7,6 +7,36 @@ let globalJsonRes;
 let checked = false;
 
 const fetchData = async () => {
+    const genDescription = (curCar) => {
+        const ul = document.createElement("ul");
+
+        const height = document.createElement("li");
+        height.innerText = `Height: ${curCar.height}cm`;
+        ul.appendChild(height);
+
+        const mass = document.createElement("li");
+        mass.innerText = `Mass: ${curCar.mass}kg`;
+        ul.appendChild(mass)
+
+        const hairColor = document.createElement("li");
+        hairColor.innerText = `Hair color: ${curCar.hair_color}`;
+        ul.appendChild(hairColor);
+
+        const eyeColor = document.createElement("li");
+        eyeColor.innerText = `Eye color: ${curCar.eye_color}`;
+        ul.appendChild(eyeColor);
+
+        const birthYear = document.createElement("li");
+        birthYear.innerText = `Birth year: ${curCar.birth_year}`;
+        ul.appendChild(birthYear);
+
+        const gender = document.createElement("li");
+        gender.innerText = `Gender: ${curCar.gender}`
+        ul.appendChild(gender);
+
+        return ul;
+    }
+
     const sidebar = document.getElementById("sidebar");
     
     console.log("Styles applying...");
@@ -21,14 +51,16 @@ const fetchData = async () => {
     fetch(`https://swapi.dev/api/people/?page=${page}`).then(res => res.json().then(jsonRes => {
         loadingIndicator.style.display = "none";
         main.style.display = "block";
-        sidebar.classList.add("checked");
-        sidebar.classList.remove("unchecked");
         globalJsonRes = jsonRes;
-
+        
         if (window.screen.width < 640) {
             console.log("Applying mobile styles...")
-            mobile();
+            sidebar.classList.remove("checked");
+            sidebar.classList.add("unchecked");
             console.log("Mobile done")
+        } else {
+            sidebar.classList.add("checked");
+            sidebar.classList.remove("unchecked");
         }
         console.log("Styles done");
         
@@ -41,7 +73,10 @@ const fetchData = async () => {
             const name = document.createElement("h2");
             name.textContent = curCar.name;
             
+            const des = genDescription(curCar)
+            
             card.appendChild(name);
+            card.appendChild(des)
             
             characterList.appendChild(card);
             console.log(`Person ${i} is done`);
@@ -152,6 +187,20 @@ const init = () => {
     genSidebar();
     applyURLParams();
     fetchData();
+}
+
+window.onchange = () => {
+    const sidebar = document.getElementById("sidebar")
+
+    if (window.screen.width < 640) {
+        console.log("Applying mobile styles...")
+        sidebar.classList.remove("checked");
+        sidebar.classList.add("unchecked");
+        console.log("Mobile done")
+    } else {
+        sidebar.classList.add("checked");
+        sidebar.classList.remove("unchecked");
+    }
 }
 
 window.onload = init;
