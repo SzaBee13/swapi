@@ -145,10 +145,6 @@ footer {
         grid-template-columns: 100%;
     }
 
-    #sidebar {
-        display: none;
-    }
-
     #sidebar.checked {
         display: flex;
     }
@@ -160,4 +156,8 @@ footer {
     .menu-icon {
         display: block; /* Mobilon jelenjen meg a hamburger ikon */
     }
+}
+
+#sidebar.unchecked {
+    display: none;
 }

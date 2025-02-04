@@ -7,22 +7,30 @@ let globalJsonRes;
 let checked = false;
 
 const fetchData = async () => {
-    const sidebar = document.getElementById("sidebar")
+    const sidebar = document.getElementById("sidebar");
     
+    console.log("Styles applying...");
     loadingIndicator.style.display = "flex";
     main.style.display = "none";
-    sidebar.classList.add("unchecked")
-    sidebar.classList.remove("checked")
-    characterList.innerHTML = ``
-    genButtons()
+    sidebar.classList.add("unchecked");
+    sidebar.classList.remove("checked");
+    characterList.innerHTML = ``;
+    genButtons();
     
+    console.log("Fetching...")
     fetch(`https://swapi.dev/api/people/?page=${page}`).then(res => res.json().then(jsonRes => {
         loadingIndicator.style.display = "none";
         main.style.display = "block";
-        sidebar.classList.add("checked")
-        sidebar.classList.remove("unchecked")
-        globalJsonRes = jsonRes
-        
+        sidebar.classList.add("checked");
+        sidebar.classList.remove("unchecked");
+        globalJsonRes = jsonRes;
+
+        if (window.screen.width < 640) {
+            console.log("Applying mobile styles...")
+            mobile();
+            console.log("Mobile done")
+        }
+        console.log("Styles done");
         
         for (let i = 0; i < 10; i++) {
             let curCar = jsonRes.results[i];
@@ -36,9 +44,11 @@ const fetchData = async () => {
             card.appendChild(name);
             
             characterList.appendChild(card);
+            console.log(`Person ${i} is done`);
         }
         
-    }))
+        console.log("Fetching is done")
+    }));
 }
 
 const next = () => {
@@ -105,6 +115,7 @@ const genButtons = () => {
 const genSidebar = () => {
     const sidebar = document.getElementById("sidebar");
     sidebar.classList.add("unchecked")
+    sidebar.classList.remove("checked")
 
     fetch(`https://swapi.dev/api/people/`).then(res => res.json().then(jsonRes => {
         globalJsonRes = jsonRes;
